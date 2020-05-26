@@ -3,13 +3,22 @@ import time
 from base import element_exist
 
 
-def login(self):
-    time.sleep(15)
-    exist = False
-    self.driver.tap([(92, 98)])
-    if self.driver.find_element_by_android_uiautomator('new UiSelector().text("欢迎登陆柠檬精")'):
-        print("未登陆")
-    else:
-        print("已登录")
-    time.sleep(5)
+class LoginPage(element_exist.Action):
+    login_btn_loc = ("showLoginBtn")
+    phone_input_loc = ("mobileEditText")
+    send_sms_btn_loc = ("sendSmsBtn")
+    code_input_loc = ("codeInputView")
+    avatar_loc = ("homeAvatarView")
 
+    def login_in(self):
+        time.sleep(2)
+        self.find_element(self.login_btn_loc).click()
+        time.sleep(5)
+        self.find_element(self.phone_input_loc).send_keys('12345678998')
+        self.find_element(self.send_sms_btn_loc).click()
+        time.sleep(3)
+        self.find_element(self.code_input_loc).send_keys('8998')
+
+    def login_out(self):
+        self.find_element(self.avatar_loc).click()
+        time.sleep(2)
